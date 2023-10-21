@@ -41,7 +41,7 @@ stats = INIT.bind(params).runSingle()
 if not stats.isSuccessful():
       raise 'failed initialization'
 
-for i in range(3):
+for i in range(1):
    out = "gs://kick_the/out/pagerank_data_" + str(i + 1)
    params["docs_out"] = out
    Pig.fs("rmr " + out)
