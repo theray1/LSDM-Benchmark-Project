@@ -6,8 +6,9 @@ import re
 findspark.init()
 from pyspark.sql import SparkSession
 
+
 spark = SparkSession.builder\
-        .master("local")\
+        .master("local"w+')\
         .appName("Colab")\
         .config('spark.ui.port', '4050')\
         .getOrCreate()
@@ -34,14 +35,14 @@ ranks = links.map(lambda url_neighbors: (url_neighbors[0], 1.0))
 
 
 for iteration in range(1):
+    links = links.partitionBy(links.getNumPartitions())
+    ranks = ranks.partitionBy(ranks.getNumPartitions())
   # Calculates URL contributions to the rank of other URLs.
-  contribs = links.join(ranks).flatMap(lambda url_urls_rank: computeContribs(
+    contribs = links.join(ranks).flatMap(lambda url_urls_rank: computeContribs(
             url_urls_rank[1][0], url_urls_rank[1][1]  # type: ignore[arg-type]
         ))
   # Re-calculates URL ranks based on neighbor contributions.
-  ranks = contribs.reduceByKey(add).mapValues(lambda rank: rank * 0.85 + 0.15)
-
-    # Collects all URL ranks and dump them to console.
+    ranks = contribs.reduceByKey(add).mapValues(lambda rank: rank * 0.85 + 0.15)
 try:
   os.remove("/text")
 except:

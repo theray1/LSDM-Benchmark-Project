@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from org.apache.pig.scripting import *
+import sys
 
 INIT = Pig.compile("""
 A = LOAD 'gs://public_lddm_data/small_page_links.nt' using PigStorage(' ') as (url:chararray, p:chararray, link:chararray);
@@ -35,13 +36,13 @@ STORE new_pagerank
     USING PigStorage('\t');
 """)
 
-params = { 'd': '0.5', 'docs_in': 'gs://kick_the/out/pagerank_data_simple' }
+params = { 'd': '0.85', 'docs_in': 'gs://kick_the/out/pagerank_data_simple' }
 
 stats = INIT.bind(params).runSingle()
 if not stats.isSuccessful():
       raise 'failed initialization'
 
-for i in range(1):
+for i in range(3):
    out = "gs://kick_the/out/pagerank_data_" + str(i + 1)
    params["docs_out"] = out
    Pig.fs("rmr " + out)
