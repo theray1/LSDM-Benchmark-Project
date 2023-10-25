@@ -1,0 +1,2 @@
+=== Partition by sur 1 fois avant la loop, 3 iter de loop
+Run Spark Job Time: 2499.421550989151 workers: 2 mode: spark 

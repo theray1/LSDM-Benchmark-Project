@@ -1,1 +1,11 @@
-Run Pig Job Time: 180.46792078018188 workers: 2 mode: pig
+Run Spark Job Time: 37.8811399936676 workers: 2 mode: spark 
+Run Spark Job Time: 34.775144815444946 workers: 2 mode: spark 
+Run Spark Job Time: 44.53327560424805 workers: 2 mode: spark 
+Run Spark Job Time: 44.53547811508179 workers: 2 mode: spark 
+Run Spark Job Time: 36.58991861343384 workers: 2 mode: spark 
+====
+Run Spark Job Time: 2499.421550989151 workers: 2 mode: spark 
+Run Spark Job Time: 0.7623538970947266 workers: 2 mode: spark 
+Run Spark Job Time: 0.7548868656158447 workers: 2 mode: spark 
+Run Pig Job Time: 15.42641830444336 workers: 2 mode: pig 
+Run Pig Job Time: 2907.872440814972 workers: 2 mode: pig 

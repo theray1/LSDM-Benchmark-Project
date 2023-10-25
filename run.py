@@ -1,5 +1,8 @@
 import subprocess
 import time
+from enum import Enum
+
+
 
 # Function to run a command and measure execution time
 def run_command(command):
@@ -35,40 +38,57 @@ create_cluster_command = (
 )
 run_command(create_cluster_command)
 
-# Copy data to the cluster
-copy_data_command = f"gsutil cp gs://public_lddm_data/small_page_links.nt gs://{bucket_name}/"
-run_command(copy_data_command)
+# # Copy data to the cluster
+# copy_data_command = f"gsutil cp gs://public_lddm_data/small_page_links.nt gs://{bucket_name}/"
+# run_command(copy_data_command)
 
 # Copy Pig code to the cluster
 copy_pig_code_command = "gsutil cp pigpagerank.py gs://kick_the/"
 run_command(copy_pig_code_command)
 
+#copy sparkcode
+copy_spark_code_command = "gsutil cp sparkpagerank.py gs://kick_the/"
+run_command(copy_spark_code_command)
+
 # Clean out directory
 clean_directory_command = "gsutil rm -rf gs://kick_the/out"
 run_command(clean_directory_command)
 
-# Run the Pig job
-run_pig_job_command = (
-    f"gcloud dataproc jobs submit pig "
-    f"--region {region} "
-    f"--cluster cluster-a35a "
-    f"-f gs://kick_the/dataproc.py"
-)
-run_pig_job_time = run_command_profiled(run_pig_job_command)
 
-# Access results
-access_results_command = "gsutil cat gs://kick_the/out/pagerank_data_10/part-r-00000"
-run_command(access_results_command)
+if mode == "pig":
+# Run the Pig job
+    run_pig_job_command = (
+        f"gcloud dataproc jobs submit pig "
+        f"--region {region} "
+        f"--cluster cluster-a35a "
+        f"-f gs://kick_the/pigpagerank.py"
+    )
+    print("Running Pig job")
+    run_pig_job_time = run_command_profiled(run_pig_job_command)
+    print("Run Pig Job Time: ", run_pig_job_time)
+    with open("res.txt", "a+") as myfile:
+        myfile.write(f"Run Pig Job Time: {run_pig_job_time} workers: {num_workers} mode: {mode} \n")
+else:
+    run_spark_job_command = (
+        f"gcloud dataproc jobs submit pyspark gs://kick_the/sparkpagerank.py "
+        f"--region {region} "
+        f"--cluster cluster-a35a" 
+    )
+    print("running spark job")
+    run_spark_job_time = run_command_profiled(run_spark_job_command)
+    print("Run Spark Job Time: ", run_spark_job_time)
+    with open("res.txt", "a+") as myfile:
+        myfile.write(f"Run Spark Job Time: {run_spark_job_time} workers: {num_workers} mode: {mode} \n")
+
+# Clean out directory
+clean_directory_command = "gsutils rm -rf gs://kick_the/out/"
+run_command(clean_directory_command)
 
 # Delete the cluster
 delete_cluster_command = (
-    f"gcloud dataproc clusters stop cluster-a35a "
+    f"gcloud dataproc clusters delete cluster-a35a "
     f"--region {region} "
     f"--quiet"
 )
-run_command(delete_cluster_command)
+#run_command(delete_cluster_command)
 
-print("Run Pig Job Time: ", run_pig_job_time)
-
-with open("res.txt", "a+") as myfile:
-    myfile.write(f"Run Pig Job Time: {run_pig_job_time} workers: {num_workers} mode: {mode}")
