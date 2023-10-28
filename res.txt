@@ -9,3 +9,17 @@ Run Spark Job Time: 0.7623538970947266 workers: 2 mode: spark
 Run Spark Job Time: 0.7548868656158447 workers: 2 mode: spark 
 Run Pig Job Time: 15.42641830444336 workers: 2 mode: pig 
 Run Pig Job Time: 2907.872440814972 workers: 2 mode: pig 
+Run Spark Job Time: 1.0416772365570068 workers: 4 mode: pyspark 
+Run Spark Job Time: 0.9423577785491943 workers: 4 mode: pyspark 
+Run Spark Job Time: 2358.970227241516 workers: 4 mode: pyspark 
+Run Spark Job Time: 1118.6647317409515 workers: 4 mode: pyspark 
+Run Spark Job Time: 1483.2852623462677 workers: 3 mode: pyspark 
+Run Spark Job Time: 1511.3514251708984 workers: 2 mode: pyspark 
+Run Spark Job Time: 1532.9711549282074 workers: 2 mode: pyspark 
+Run Spark Job Time: 30.517503261566162 workers: 2 mode: pyspark 
+Run Spark Job Time: 2641.9268822669983 workers: 2 mode: pyspark 
+Run Spark Job Time: 2519.9908225536346 workers: 2 mode: pyspark 
+Run Spark Job Time: 1.0356996059417725 workers: 4 mode: pyspark 
+Run Spark Job Time: 2183.2526059150696 workers: 4 mode: pyspark 
+Run Spark Job Time: 2229.9786155223846 workers: 4 mode: pyspark 
+Run Spark Job Time: 1147.965614080429 workers: 4 mode: pyspark 
