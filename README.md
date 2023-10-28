@@ -1,13 +1,9 @@
-Projet Large Scale Data Management
+# Projet Large Scale Data Management
+## GOAL
 
-The goal of the project is to run benchmarks regarding the execution time of the PageRank algorithm, while tinkering 
-with the following parameters :
+The goal of the project is to run benchmarks regarding the execution time of the PageRank algorithm depending of several parameters.
 
-- Big Data frameworks (PIG, SPARK)
-
-- Amount of workers
-
-Contributors :
+## CONTRIBUTORS
 
  - Bilal MOLLI
 
@@ -15,26 +11,28 @@ Contributors :
 
 ## EXPERIMENTS
 
-We ran experiments with the following parameters :
+We ran experiments with every combination of the following parameters :
 
-| Page Rank Algorithm  |   | Execution time (ms)  |
-|---------------------------|------------------|----------------------|
-| Pig                       | 1                | 5 965 137            |
-| Pig                       | 2                | 2 926 194            |
-| Pig                       | 4                | 2 097 353            |
-| Pig                       | 5                | 1 936 174            |
-| Spark                     | 1                | FAILED               |
-| Spark                     | 2                | 2 457 349            |
-| Spark                     | 4                | 1 755 194            |
-| Spark                     | 5                | 1 777 790            |
-| Spark + Controlled Part.  | 1                | FAILED               |
-| Spark + Controlled Part.  | 2                | 1 507 807            |
-| Spark + Controlled Part.  | 4                | 1 504 586            |
-| Spark + Controlled Part.  | 5                | 1 469 502            |
+1. Algorithm 
+    - PIG
+    - Spark w/ data localization
+    - Spark w/o data localization
+
+2. Number of worker nodes
+    - 2
+    - 3
+    - 4
+
+Every bucket / worker node was situated in the same geographical zone (EUW6) to avoid network latency.
+
+The dataset which the experiments were ran on is located at gs://public_lddm_data/page_links_en.nt.bz2.
+
+The output ranking gives us <http://dbpedia.org/resource/Living_people> as the top ranked page, with a score of 36794.
 
 ## RESULTS
 
-
 ![Results](plotpagerank.PNG)
 
+We can see that Spark is always faster with localized data, and that regardless of data localization, Spark is faster than PIG likely due to the fact to Spark doesn't need to write to disk nearly as much as PIG.
 
+Furthermore, as expected, the execution time of every algorithm decreases as we increase the number of worker node.
